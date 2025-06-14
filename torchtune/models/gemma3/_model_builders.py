@@ -27,7 +27,7 @@ def gemma3_1b() -> TransformerDecoder:
         TransformerDecoder: Instantiation of Gemma3 1B model
     """
     return gemma3(
-        vocab_size=262_144,
+        vocab_size=262_208,
         num_layers=26,
         num_heads=4,
         head_dim=256,
@@ -75,7 +75,7 @@ def lora_gemma3_1b(
         TransformerDecoder: Instantiation of Gemma3 1B model with LoRA applied
     """
     return lora_gemma3(
-        vocab_size=262_144,
+        vocab_size=262_208,
         num_layers=26,
         num_heads=4,
         head_dim=256,
@@ -114,7 +114,7 @@ def gemma3_4b() -> TransformerDecoder:
         TransformerDecoder: Instantiation of Gemma3 4B model
     """
     return gemma3(
-        vocab_size=262_144,
+        vocab_size=262_208,
         num_layers=34,
         num_heads=8,
         head_dim=256,
@@ -161,7 +161,7 @@ def lora_gemma3_4b(
         TransformerDecoder: Instantiation of Gemma3 4B model with LoRA applied
     """
     return lora_gemma3(
-        vocab_size=262_144,
+        vocab_size=262_208,
         num_layers=34,
         num_heads=8,
         head_dim=256,
@@ -200,7 +200,7 @@ def gemma3_12b() -> TransformerDecoder:
         TransformerDecoder: Instantiation of Gemma3 12B model
     """
     return gemma3(
-        vocab_size=262_144,
+        vocab_size=262_208,
         num_layers=48,
         num_heads=16,
         head_dim=256,
@@ -247,7 +247,7 @@ def lora_gemma3_12b(
         TransformerDecoder: Instantiation of Gemma3 12B model with LoRA applied
     """
     return lora_gemma3(
-        vocab_size=262_144,
+        vocab_size=262_208,
         num_layers=48,
         num_heads=16,
         head_dim=256,
@@ -285,7 +285,7 @@ def gemma3_27b() -> TransformerDecoder:
         TransformerDecoder: Instantiation of Gemma3 27B model
     """
     return gemma3(
-        vocab_size=262_144,
+        vocab_size=262_208,
         num_layers=62,
         num_heads=32,
         head_dim=128,
@@ -332,7 +332,7 @@ def lora_gemma3_27b(
         TransformerDecoder: Instantiation of Gemma3 27B model with LoRA applied
     """
     return lora_gemma3(
-        vocab_size=262_144,
+        vocab_size=262_208,
         num_layers=62,
         num_heads=32,
         head_dim=128,

@@ -18,7 +18,7 @@ from torchtune.models.convert_weights import get_mapped_key
 Gemma 3 and Gemma original implementations share different normalization but with
 the same name, so it is mandatory to differentiate their state dict in order to map
 correctly the different weights.
-They are essentially the same except for "model.layers.{}.post_attention_layernorm.weight" key.
+They are essentially the same except for "language_model.model.layers.{}.post_attention_layernorm.weight" key.
 See discussion here: https://github.com/pytorch/torchtune/pull/1835#discussion_r1803410251
 """
 
@@ -40,6 +40,26 @@ _GEMMA3_FROM_HF = {
     "model.layers.{}.pre_feedforward_layernorm.weight": "layers.{}.mlp_scale.scale",
     "model.norm.weight": "norm.scale",
     "lm_head.weight": "output.weight",
+}
+
+_GEMMA3_FROM_HF_TEXT = {
+    "language_model.model.embed_tokens.weight": "tok_embeddings.weight",
+    "language_model.model.layers.{}.self_attn.q_proj.weight": "layers.{}.attn.q_proj.weight",
+    "language_model.model.layers.{}.self_attn.k_proj.weight": "layers.{}.attn.k_proj.weight",
+    "language_model.model.layers.{}.self_attn.v_proj.weight": "layers.{}.attn.v_proj.weight",
+    "language_model.model.layers.{}.self_attn.k_norm.weight": "layers.{}.attn.k_norm.scale",
+    "language_model.model.layers.{}.self_attn.q_norm.weight": "layers.{}.attn.q_norm.scale",
+    "language_model.model.layers.{}.self_attn.o_proj.weight": "layers.{}.attn.output_proj.weight",
+    "language_model.model.layers.{}.self_attn.rotary_emb.inv_freq": None,
+    "language_model.model.layers.{}.mlp.gate_proj.weight": "layers.{}.mlp.w1.weight",
+    "language_model.model.layers.{}.mlp.up_proj.weight": "layers.{}.mlp.w3.weight",
+    "language_model.model.layers.{}.mlp.down_proj.weight": "layers.{}.mlp.w2.weight",
+    "language_model.model.layers.{}.input_layernorm.weight": "layers.{}.sa_norm.scale",
+    "language_model.model.layers.{}.post_attention_layernorm.weight": "layers.{}.sa_scale.scale",
+    "language_model.model.layers.{}.post_feedforward_layernorm.weight": "layers.{}.mlp_norm.scale",
+    "language_model.model.layers.{}.pre_feedforward_layernorm.weight": "layers.{}.mlp_scale.scale",
+    "language_model.model.norm.weight": "norm.scale",
+    "lm_head.weight": "output.weight"
 }
 
 
@@ -82,7 +102,7 @@ def gemma3_hf_to_tune(
 
     for key, value in state_dict.items():
         if "rotary_emb.inv_freq" not in key:  # Skip loading the position embeddings
-            new_key = get_mapped_key(key, _GEMMA3_FROM_HF)
+            new_key = get_mapped_key(key, _GEMMA3_FROM_HF_TEXT)
             if "q_proj" in key:
                 value = _permute(value, num_heads)
             elif "k_proj" in key:
